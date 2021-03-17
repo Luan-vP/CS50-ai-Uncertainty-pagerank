@@ -18,7 +18,7 @@ def main():
     for page in corpus.keys():
         print(page)
 
-    transition_model(corpus, '3.html', 0.8)
+    transition_model(corpus, '1.html', 0.8)
 
     # End shiv --
 
@@ -69,6 +69,14 @@ def transition_model(corpus, page, damping_factor):
     a link at random chosen from all pages in the corpus.
     """
     number_of_links = len(corpus[page])
+
+    if number_of_links == 0:
+        return { 
+            next_page: 1.0 / len(corpus.keys())
+
+            for next_page in corpus.keys()
+        }
+        
     link_probability = damping_factor / number_of_links
 
     random_page_probability = ( 1 - damping_factor ) / len(corpus.keys())
@@ -79,7 +87,11 @@ def transition_model(corpus, page, damping_factor):
         for next_page in corpus.keys()
     }
 
+    print("print(transition_dictionary)")
     print(transition_dictionary)
+    print("TEST: transition model values sun to 1")
+    print(sum(transition_dictionary.values()))
+    # print(sum(transition_model)
 
     return transition_dictionary
 
