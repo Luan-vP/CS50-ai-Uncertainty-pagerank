@@ -18,7 +18,8 @@ def main():
     for page in corpus.keys():
         print(page)
 
-    transition_model(corpus, '1.html', 0.8)
+    print("transition_model(corpus, '1.html', 0.8)")
+    print(transition_model(corpus, '1.html', 0.8))
 
     # End shiv --
 
@@ -76,9 +77,8 @@ def transition_model(corpus, page, damping_factor):
 
             for next_page in corpus.keys()
         }
-        
-    link_probability = damping_factor / number_of_links
 
+    link_probability = damping_factor / number_of_links
     random_page_probability = ( 1 - damping_factor ) / len(corpus.keys())
 
     transition_dictionary = { 
@@ -86,12 +86,6 @@ def transition_model(corpus, page, damping_factor):
 
         for next_page in corpus.keys()
     }
-
-    print("print(transition_dictionary)")
-    print(transition_dictionary)
-    print("TEST: transition model values sun to 1")
-    print(sum(transition_dictionary.values()))
-    # print(sum(transition_model)
 
     return transition_dictionary
 
@@ -105,7 +99,28 @@ def sample_pagerank(corpus, damping_factor, n):
     their estimated PageRank value (a value between 0 and 1). All
     PageRank values should sum to 1.
     """
-    raise NotImplementedError
+    # Start from random page
+    starting_page = random.sample(corpus.keys(),1)[0]
+    print(starting_page)
+
+    # for sample in range(n):
+
+    page_transition_model = transition_model(corpus, starting_page, damping_factor)
+
+    print(random.choices(list(page_transition_model.keys()), list(page_transition_model.values())))
+
+    print(page_transition_model)
+
+    count_dictionary = { 
+        
+        page: 0
+
+        for page in corpus.keys()
+    }
+
+    count_dictionary[starting_page] += 1
+
+    print(count_dictionary)
 
 
 def iterate_pagerank(corpus, damping_factor):
@@ -117,7 +132,8 @@ def iterate_pagerank(corpus, damping_factor):
     their estimated PageRank value (a value between 0 and 1). All
     PageRank values should sum to 1.
     """
-    raise NotImplementedError
+
+    
 
 
 if __name__ == "__main__":
