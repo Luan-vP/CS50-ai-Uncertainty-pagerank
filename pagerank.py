@@ -99,28 +99,41 @@ def sample_pagerank(corpus, damping_factor, n):
     their estimated PageRank value (a value between 0 and 1). All
     PageRank values should sum to 1.
     """
-    # Start from random page
-    starting_page = random.sample(corpus.keys(),1)[0]
-    print(starting_page)
 
-    # for sample in range(n):
-
-    page_transition_model = transition_model(corpus, starting_page, damping_factor)
-
-    print(random.choices(list(page_transition_model.keys()), list(page_transition_model.values())))
-
-    print(page_transition_model)
-
+    # Count page visits
     count_dictionary = { 
         
-        page: 0
+        page: 0.0
 
         for page in corpus.keys()
     }
 
+    # Start from random page
+    starting_page = random.sample(corpus.keys(),1)[0]
+    print(starting_page)
+
     count_dictionary[starting_page] += 1
 
+    for _ in range(n-1):
+
+        page_transition_model = transition_model(corpus, starting_page, damping_factor)
+        print(page_transition_model)
+        
+        next_page = random.choices(list(page_transition_model.keys()), list(page_transition_model.values()))[0]
+
+        count_dictionary[next_page] += 1
+
+        starting_page = next_page
+
+    print(sum(count_dictionary.values()))
+
     print(count_dictionary)
+
+    return {
+        page: count_dictionary[page] / n
+
+        for page in corpus
+    }
 
 
 def iterate_pagerank(corpus, damping_factor):
