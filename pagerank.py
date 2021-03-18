@@ -146,6 +146,13 @@ def iterate_pagerank(corpus, damping_factor):
     PageRank values should sum to 1.
     """
 
+    # Initialise to 0.5
+    page_rank_dict = {
+        page: 0.5
+
+        for page in corpus
+    }
+
     
 
 
